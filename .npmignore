@@ -1,0 +1,5 @@
+# Exclude source files and unneeded config files from the published package
+src/
+.gitignore
+.gitattributes
+tsconfig.json

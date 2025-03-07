@@ -1,0 +1,43 @@
+{
+  "name": "n8n-tavily-nodes",
+  "version": "1.0.0",
+  "description": "n8n Community Nodes for Tavily API integration",
+  "author": "Steven Milanese <dev@levelai.xyz> (https://StevenMilanese.com)",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "n8n",
+    "community-node",
+    "tavily",
+    "api",
+    "search",
+    "extract"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developtheweb/n8n-tavily-nodes"
+  },
+  "bugs": {
+    "url": "https://github.com/developtheweb/n8n-tavily-nodes/issues"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^4.9.0"
+  },
+  "n8n": {
+    "credentials": [
+      "./dist/credentials/TavilyApi.credentials.js"
+    ],
+    "nodes": [
+      "./dist/nodes/Tavily/TavilySearch.node.js",
+      "./dist/nodes/Tavily/TavilyExtract.node.js"
+    ]
+  }
+}
