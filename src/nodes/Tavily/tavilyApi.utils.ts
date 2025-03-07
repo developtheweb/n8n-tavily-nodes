@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { NodeApiError } from 'n8n-workflow';
-import { IExecuteFunctions } from 'n8n-core';
+import { NodeApiError, IExecuteFunctions } from 'n8n-workflow'; // CHANGED
+// import { IExecuteFunctions } from 'n8n-core'; // REMOVED
 
 /**
  * Common function to call the Tavily API.
@@ -30,6 +30,7 @@ export async function tavilyApiRequest(
 		if (axios.isAxiosError(error)) {
 			const status = error.response?.status;
 			let message = `Tavily API error: ${error.message}`;
+
 			if (status) {
 				switch (status) {
 					case 400:
@@ -65,19 +66,19 @@ export async function tavilyApiRequest(
 					additionalMsgParts.push(`error_message: ${data.error_message}`);
 				}
 				if (!data.error_code && !data.error_message) {
-					// Fall back to a full JSON dump if no known fields
 					additionalMsgParts.push(JSON.stringify(data));
 				}
 
-				// Append to main message
 				if (additionalMsgParts.length > 0) {
 					message += ` | ${additionalMsgParts.join(' | ')}`;
 				}
 			}
 
-			throw new NodeApiError(this.getNode(), new Error(message));
+			// PASS A JsonObject
+			throw new NodeApiError(this.getNode(), { message });
 		} else {
-			throw new NodeApiError(this.getNode(), error as Error);
+			// If not an AxiosError, wrap it
+			throw new NodeApiError(this.getNode(), { message: String(error) });
 		}
 	}
 

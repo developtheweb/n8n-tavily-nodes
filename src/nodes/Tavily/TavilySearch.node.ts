@@ -1,15 +1,16 @@
-import { IExecuteFunctions } from 'n8n-core';
 import {
+	IExecuteFunctions,
+	NodeApiError,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 	INodeProperties,
-	NodeApiError,
 } from 'n8n-workflow';
+// REMOVED import { IExecuteFunctions } from 'n8n-core';
 
 import { tavilyApiRequest } from './tavilyApi.utils';
 
-// NEW: maintain a constant array for valid time ranges
+// For older n8n usage, ALLOWED_TIME_RANGES is fine here
 const ALLOWED_TIME_RANGES = ['', 'day', 'week', 'month', 'year', 'd', 'w', 'm', 'y'];
 
 export class TavilySearch implements INodeType {
@@ -205,8 +206,7 @@ export class TavilySearch implements INodeType {
 
 		const credentials = await this.getCredentials('tavilyApi');
 		if (!credentials?.apiKey) {
-			// Standardize NodeApiError usage
-			throw new NodeApiError(this.getNode(), new Error('Missing Tavily API key in credentials.'));
+			throw new NodeApiError(this.getNode(), { message: 'Missing Tavily API key in credentials.' });
 		}
 		const apiKey = credentials.apiKey as string;
 
@@ -225,21 +225,21 @@ export class TavilySearch implements INodeType {
 				const includeDomains = this.getNodeParameter('includeDomains', i, []) as string[];
 				const excludeDomains = this.getNodeParameter('excludeDomains', i, []) as string[];
 
-				// --- Validate input parameters ---
+				// Validate parameters
 				if (!query?.trim()) {
-					throw new NodeApiError(this.getNode(), new Error('Query parameter cannot be empty.'));
+					throw new NodeApiError(this.getNode(), { message: 'Query parameter cannot be empty.' });
 				}
 				if (maxResults < 0 || maxResults > 20) {
-					throw new NodeApiError(this.getNode(), new Error('Max Results must be between 0 and 20.'));
+					throw new NodeApiError(this.getNode(), { message: 'Max Results must be between 0 and 20.' });
 				}
-				// Use ALLOWED_TIME_RANGES constant
 				if (!ALLOWED_TIME_RANGES.includes(timeRange)) {
-					throw new NodeApiError(this.getNode(), new Error(`Invalid timeRange value. Allowed: ${ALLOWED_TIME_RANGES.join(', ')}`));
+					throw new NodeApiError(this.getNode(), {
+						message: `Invalid timeRange value. Allowed: ${ALLOWED_TIME_RANGES.join(', ')}`,
+					});
 				}
 				if (topic === 'news' && days < 0) {
-					throw new NodeApiError(this.getNode(), new Error('Days must be >= 0 when topic is "news".'));
+					throw new NodeApiError(this.getNode(), { message: 'Days must be >= 0 when topic is "news".' });
 				}
-				// ----------------------------------
 
 				const body: Record<string, any> = {
 					query,
@@ -267,7 +267,6 @@ export class TavilySearch implements INodeType {
 					body.exclude_domains = excludeDomains;
 				}
 
-				// Make request via the shared utility
 				const result = await tavilyApiRequest.call(
 					this,
 					'POST',
@@ -278,11 +277,10 @@ export class TavilySearch implements INodeType {
 
 				returnData.push({ json: result });
 			} catch (error) {
-				// Ensure consistent error wrapping
 				if (error instanceof NodeApiError) {
 					throw error;
 				}
-				throw new NodeApiError(this.getNode(), error as Error);
+				throw new NodeApiError(this.getNode(), { message: String(error) });
 			}
 		}
 

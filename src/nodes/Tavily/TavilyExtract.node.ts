@@ -1,11 +1,12 @@
-import { IExecuteFunctions } from 'n8n-core';
 import {
+	IExecuteFunctions,
+	NodeApiError,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 	INodeProperties,
-	NodeApiError,
 } from 'n8n-workflow';
+// REMOVED import { IExecuteFunctions } from 'n8n-core';
 
 import { tavilyApiRequest } from './tavilyApi.utils';
 
@@ -87,7 +88,7 @@ export class TavilyExtract implements INodeType {
 
 		const credentials = await this.getCredentials('tavilyApi');
 		if (!credentials?.apiKey) {
-			throw new NodeApiError(this.getNode(), new Error('Missing Tavily API key in credentials.'));
+			throw new NodeApiError(this.getNode(), { message: 'Missing Tavily API key in credentials.' });
 		}
 		const apiKey = credentials.apiKey as string;
 
@@ -97,9 +98,8 @@ export class TavilyExtract implements INodeType {
 				const includeImages = this.getNodeParameter('includeImages', i) as boolean;
 				const extractDepth = this.getNodeParameter('extractDepth', i) as string;
 
-				// Validate input parameters
 				if (!Array.isArray(urls) || urls.length === 0) {
-					throw new NodeApiError(this.getNode(), new Error('At least one URL is required.'));
+					throw new NodeApiError(this.getNode(), { message: 'At least one URL is required.' });
 				}
 
 				const body = {
@@ -121,7 +121,7 @@ export class TavilyExtract implements INodeType {
 				if (error instanceof NodeApiError) {
 					throw error;
 				}
-				throw new NodeApiError(this.getNode(), error as Error);
+				throw new NodeApiError(this.getNode(), { message: String(error) });
 			}
 		}
 
