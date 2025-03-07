@@ -1,6 +1,6 @@
-# n8n-tavily-nodes
+# n8n-nodes-tavilyapi
 
-**n8n-tavily-nodes** is an n8n community node package that integrates the [Tavily API](https://api.tavily.com) for powerful **web search** and **content extraction**.
+**n8n-nodes-tavilyapi** is an n8n community node package that integrates the [Tavily API](https://api.tavily.com) for powerful **web search** and **content extraction**.
 
 It contains two nodes:
 
@@ -51,7 +51,7 @@ It contains two nodes:
 1.  From your n8n root directory, run:
 
     ```bash
-    npm install n8n-tavily-nodes
+    npm install n8n-nodes-tavilyapi
     ```
 
 2.  Restart n8n.
