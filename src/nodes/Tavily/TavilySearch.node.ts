@@ -6,11 +6,9 @@ import {
 	INodeTypeDescription,
 	INodeProperties,
 } from 'n8n-workflow';
-// REMOVED import { IExecuteFunctions } from 'n8n-core';
 
 import { tavilyApiRequest } from './tavilyApi.utils';
 
-// For older n8n usage, ALLOWED_TIME_RANGES is fine here
 const ALLOWED_TIME_RANGES = ['', 'day', 'week', 'month', 'year', 'd', 'w', 'm', 'y'];
 
 export class TavilySearch implements INodeType {
@@ -217,11 +215,15 @@ export class TavilySearch implements INodeType {
 				const searchDepth = this.getNodeParameter('searchDepth', i) as string;
 				const maxResults = this.getNodeParameter('maxResults', i) as number;
 				const timeRange = this.getNodeParameter('timeRange', i) as string;
-				const days = this.getNodeParameter('days', i) as number;
 				const includeAnswer = this.getNodeParameter('includeAnswer', i) as string;
 				const includeRawContent = this.getNodeParameter('includeRawContent', i) as boolean;
 				const includeImages = this.getNodeParameter('includeImages', i) as boolean;
-				const includeImageDescriptions = this.getNodeParameter('includeImageDescriptions', i) as boolean;
+				let includeImageDescriptions = false;
+				
+				if (includeImages) {
+					includeImageDescriptions = this.getNodeParameter('includeImageDescriptions', i) as boolean;
+				}
+				
 				const includeDomains = this.getNodeParameter('includeDomains', i, []) as string[];
 				const excludeDomains = this.getNodeParameter('excludeDomains', i, []) as string[];
 
@@ -237,9 +239,6 @@ export class TavilySearch implements INodeType {
 						message: `Invalid timeRange value. Allowed: ${ALLOWED_TIME_RANGES.join(', ')}`,
 					});
 				}
-				if (topic === 'news' && days < 0) {
-					throw new NodeApiError(this.getNode(), { message: 'Days must be >= 0 when topic is "news".' });
-				}
 
 				const body: Record<string, any> = {
 					query,
@@ -254,9 +253,16 @@ export class TavilySearch implements INodeType {
 				if (timeRange) {
 					body.time_range = timeRange;
 				}
+				
+				// Only get and add days parameter when topic is news
 				if (topic === 'news') {
+					const days = this.getNodeParameter('days', i) as number;
+					if (days < 0) {
+						throw new NodeApiError(this.getNode(), { message: 'Days must be >= 0 when topic is "news".' });
+					}
 					body.days = days;
 				}
+				
 				if (includeAnswer !== 'false') {
 					body.include_answer = includeAnswer;
 				}
