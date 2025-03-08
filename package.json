@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/nodes/Tavily/tavily.svg dist/ && cp src/nodes/Tavily/tavily.svg dist/nodes/Tavily/",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
