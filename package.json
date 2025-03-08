@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-tavilyapi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "n8n Community Nodes for Tavily API integration",
   "author": "Steven Milanese <dev@levelai.xyz> (https://StevenMilanese.com)",
   "license": "MIT",
