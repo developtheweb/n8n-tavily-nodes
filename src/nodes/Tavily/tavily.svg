@@ -1,87 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
-  <!-- Definitions for gradients, filters, etc. -->
-  <defs>
-    <!-- Blue gradient for primary elements -->
-    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#3B82F6" />
-    </linearGradient>
-    
-    <!-- Light blue gradient for secondary elements -->
-    <linearGradient id="lightBlueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#93C5FD" />
-      <stop offset="100%" stop-color="#60A5FA" />
-    </linearGradient>
-    
-    <!-- Drop shadow filter -->
-    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
-      <feOffset dx="1" dy="1" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.3" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-    
-    <!-- Glow effect for hover/focus -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-    
-    <!-- Main circular clip path -->
-    <clipPath id="circleClip">
-      <circle cx="50" cy="50" r="46" />
-    </clipPath>
-    
-    <!-- Document pattern -->
-    <pattern id="documentPattern" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(45)">
-      <line x1="0" y1="15" x2="30" y2="15" stroke="#EEF2FF" stroke-width="8" stroke-opacity="0.3" />
-    </pattern>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- Background -->
+  <circle cx="12" cy="12" r="11" fill="#ffffff" stroke="#4a86e8" stroke-width="1" />
   
-  <!-- Base background with gradient -->
-  <circle cx="50" cy="50" r="48" fill="url(#lightBlueGradient)" filter="url(#dropShadow)" />
-  <circle cx="50" cy="50" r="46" fill="#FFFFFF" />
+  <!-- Magnifying glass with light fill -->
+  <circle cx="10" cy="10" r="4.5" fill="#e6f0ff" stroke="#4a86e8" stroke-width="1.8" />
+  <line x1="13" y1="13" x2="18" y2="18" stroke="#4a86e8" stroke-width="1.8" stroke-linecap="round" />
   
-  <!-- Abstract document background with pattern -->
-  <rect x="15" y="15" width="70" height="70" rx="5" ry="5" fill="url(#documentPattern)" clip-path="url(#circleClip)" />
+  <!-- Small document icons representing search results -->
+  <rect x="14" y="8" width="4" height="5" rx="0.7" fill="#e6f0ff" stroke="#4a86e8" stroke-width="0.8" />
+  <rect x="7" y="15" width="4" height="5" rx="0.7" fill="#e6f0ff" stroke="#4a86e8" stroke-width="0.8" />
+  <rect x="13" y="15" width="4" height="5" rx="0.7" fill="#e6f0ff" stroke="#4a86e8" stroke-width="0.8" />
   
-  <!-- Stylized document/content layer with dynamic curves -->
-  <path d="M22,32 C40,25 60,35 78,28 V68 C60,75 40,65 22,72 Z" fill="#F0F9FF" opacity="0.7" />
+  <!-- Simple text lines inside documents -->
+  <line x1="15" y1="9.5" x2="17" y2="9.5" stroke="#4a86e8" stroke-width="0.7" />
+  <line x1="15" y1="11" x2="17" y2="11" stroke="#4a86e8" stroke-width="0.7" />
   
-  <!-- Magnifying glass outer ring with gradient and glow -->
-  <circle cx="40" cy="42" r="16" fill="none" stroke="url(#blueGradient)" stroke-width="4" filter="url(#glow)" />
+  <line x1="8" y1="16.5" x2="10" y2="16.5" stroke="#4a86e8" stroke-width="0.7" />
+  <line x1="8" y1="18" x2="10" y2="18" stroke="#4a86e8" stroke-width="0.7" />
   
-  <!-- Magnifying glass handle -->
-  <path d="M52,54 L68,70" stroke="url(#blueGradient)" stroke-width="5" stroke-linecap="round" />
-  
-  <!-- Magnifying glass reflection -->
-  <path d="M33,35 Q36,32 39,35" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.8" />
-  
-  <!-- Document content lines (representing content extraction) -->
-  <line x1="50" y1="30" x2="75" y2="30" stroke="url(#blueGradient)" stroke-width="3" stroke-linecap="round" />
-  <line x1="50" y1="38" x2="70" y2="38" stroke="url(#blueGradient)" stroke-width="3" stroke-linecap="round" />
-  <line x1="25" y1="62" x2="75" y2="62" stroke="url(#blueGradient)" stroke-width="3" stroke-linecap="round" />
-  <line x1="25" y1="70" x2="65" y2="70" stroke="url(#blueGradient)" stroke-width="3" stroke-linecap="round" />
-  <line x1="25" y1="78" x2="55" y2="78" stroke="url(#blueGradient)" stroke-width="3" stroke-linecap="round" />
-  
-  <!-- Search results dots -->
-  <circle cx="50" cy="50" r="1.5" fill="#3B82F6" />
-  <circle cx="55" cy="54" r="1.5" fill="#3B82F6" />
-  <circle cx="60" cy="50" r="1.5" fill="#3B82F6" />
-  <circle cx="55" cy="46" r="1.5" fill="#3B82F6" />
-  
-  <!-- Subtle orbital path representing search/connectivity -->
-  <ellipse cx="50" cy="50" rx="28" ry="20" fill="none" stroke="#93C5FD" stroke-width="0.7" stroke-dasharray="2 2" transform="rotate(30, 50, 50)" />
-  
-  <!-- Digital data streams (search queries) -->
-  <path d="M15,45 C25,40 35,60 45,40" fill="none" stroke="#60A5FA" stroke-width="1" stroke-dasharray="3 2" />
-  <path d="M15,55 C30,50 40,65 55,55" fill="none" stroke="#60A5FA" stroke-width="1" stroke-dasharray="3 2" />
-  
-  <!-- Outer ring/border -->
-  <circle cx="50" cy="50" r="48" fill="none" stroke="#3B82F6" stroke-width="2" opacity="0.6" />
+  <line x1="14" y1="16.5" x2="16" y2="16.5" stroke="#4a86e8" stroke-width="0.7" />
+  <line x1="14" y1="18" x2="16" y2="18" stroke="#4a86e8" stroke-width="0.7" />
 </svg>
